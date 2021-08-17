@@ -1,26 +1,27 @@
 {
-  "name": "node-jwt",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/crsgustav0/node-jwt.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/crsgustav0/node-jwt/issues"
-  },
-  "homepage": "https://github.com/crsgustav0/node-jwt#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.12",
-    "sqlite3": "^5.0.2"
-  }
+    "name": "node-jwt",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/crsgustav0/node-jwt.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/crsgustav0/node-jwt/issues"
+    },
+    "homepage": "https://github.com/crsgustav0/node-jwt#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "nodemon": "^2.0.12",
+        "sqlite3": "^5.0.2"
+    }
 }
