@@ -1,6 +1,26 @@
 const Usuario = require('./usuarios-modelo');
 const { InvalidArgumentError, InternalServerError } = require('../erros');
 
+const jwt = require('jsonwebtoken')
+
+/*
+Função utilizada para gerar o TOKEN 
+de autenticação das demais rotas a partir
+do Login
+*/
+function gerarTokenJWT(usuario) {
+    /*Cria a parte inicial do Token a partir do seu id, 
+    recibido via parâmetro*/
+    const payload = { id: usuario.id }
+
+    /*Valida a assinatura passada via recebimento do 
+    cabeçalho da autenticação 'payload' e sua senha
+    gerada por parte do servidor 'senha-secreta'*/
+    const token = jwt.sign(payload, 'senha-secreta')
+
+    return token;
+}
+
 module.exports = {
     adiciona: async(req, res) => {
         const { nome, email, senha } = req.body;
@@ -28,6 +48,13 @@ module.exports = {
     },
 
     login: (req, res) => {
+        /*Gera o token de autenticação a partir da 
+        finalização da operação de Login*/
+        const token = gerarTokenJWT(req.user)
+
+        /*Na resposta obtida a partir da requisição,
+        retorna via cabeçalho o token gerado*/
+        res.set('Authorization', token)
         res.status(204).send();
     },
 
