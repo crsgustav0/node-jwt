@@ -78,7 +78,7 @@ passport.use(
                 /*Validações referentes aos campos 
                 chave para autenticação*/
                 validarUsuario(usuario);
-                validarSenha(senha, usuario.senhaHash);
+                await validarSenha(senha, usuario.senhaHash);
 
                 /*Finaliza a autenticação dos dados, retornando via
                 'callback' erros não encontrados (nulos) e 
