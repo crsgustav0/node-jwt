@@ -16,7 +16,7 @@ module.exports = app => {
             usuariosControlador.deleta
         );
 
-    app.route('usuario/login')
+    app.route('/usuario/login')
         .post(
             /*Função utilizada para a autenticação local de dados,
             passando via parâmetro a estratégia usada, no caso local
