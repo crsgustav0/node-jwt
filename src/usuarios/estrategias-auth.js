@@ -1,5 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
+
 /*
 Importa o modelo Usuarios para utilizar,
 retornar dados a partir dos métodos próprios
@@ -16,6 +18,7 @@ const { InvalidArgumentError } = require('../erros')
 Importa a biblioteca bcrypt para validação das senhas
 */
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 /*
 Função criada para centralizar validações
@@ -70,10 +73,10 @@ passport.use(
             try {
                 /*
             
-                Realiza a busca de registros passando via parâmetro
-                o campo email, recibido a partir da requisição
+                    Realiza a busca de registros passando via parâmetro
+                    o campo email, recibido a partir da requisição
             
-                */
+                    */
                 const usuario = await Usuario.buscaPorEmail(email);
                 /*Validações referentes aos campos 
                 chave para autenticação*/
@@ -87,5 +90,26 @@ passport.use(
             } catch (error) {
                 done(error);
             }
-        })
+        }),
+
+    passport.use(
+        new BearerStrategy(
+            async(token, done) => {
+                try {
+                    /*Função utilizada para verificar a confiabilidade da autenticação,
+                    passando via parâmetro seu token de acesso e chave de assinatura
+                    interna do servidor*/
+                    const payload = jwt.verify(token, process.env.CHAVE_JWT);
+                    /*Busca registros a partir do ID de autenticação
+                    criado na autenticação*/
+                    const usuario = await Usuario.buscaPorId(payload.id);
+                    /*Finaliza a autenticação dos dados, retornando via
+                    'callback' erros não encontrados (nulos) e 
+                    o usuário autenticado*/
+                    done(null, usuario)
+                } catch (error) {
+                    done(error);
+                }
+            }
+        )),
 )
