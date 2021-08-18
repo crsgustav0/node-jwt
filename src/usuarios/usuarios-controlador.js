@@ -15,8 +15,11 @@ function gerarTokenJWT(usuario) {
 
     /*Valida a assinatura passada via recebimento do 
     cabeçalho da autenticação 'payload' e sua senha
-    gerada por parte do servidor 'senha-secreta'*/
-    const token = jwt.sign(payload, 'senha-secreta')
+    gerada por parte do servidor 'senha-secreta', 
+    sendo acessada através da variável de ambiente
+    acessada via 'process' passando via parâmetro 
+    o campo 'env' e o nome da varável*/
+    const token = jwt.sign(payload, process.env.CHAVE_JWT)
 
     return token;
 }
