@@ -11,7 +11,8 @@ module.exports = app => {
             usuariosControlador.lista
         );
 
-    app.route('/usuario/:id')
+    app.
+    route('/usuario/:id')
         .delete(
             /*Função utilizada para a autenticação local de dados,
             passando via parâmetro a estratégia usada, no caso bearer
@@ -22,15 +23,17 @@ module.exports = app => {
             ), usuariosControlador.deleta
         );
 
-    app.route('usuario/login')
+    app.
+    route('usuario/login')
         .post(
             /*Função utilizada para a autenticação local de dados,
             passando via parâmetro a estratégia usada, no caso local
             e as sessões não utilizadas 'false'
             */
             passport.authenticate(
-                'local', { session: false }
+                'local', { session: false, }
             ), usuariosControlador.login
+
         );
 
 };
