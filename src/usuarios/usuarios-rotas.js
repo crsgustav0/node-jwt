@@ -3,12 +3,17 @@ const passport = require('passport');
 const middlewaresAuth = require('./middlewares-auth')
 
 module.exports = app => {
+    app.
+    route('usuario/login')
+        .post(
+            middlewaresAuth.local,
+            usuariosControlador.login
+        );
+
     app
         .route('/usuario')
         .post(
-            //usuariosControlador.adiciona
-            middlewaresAuth.local,
-            usuariosControlador.login
+            usuariosControlador.adiciona
         )
         .get(
             usuariosControlador.lista
@@ -22,15 +27,8 @@ module.exports = app => {
             e as sessões não utilizadas 'false'
             */
             passport.authenticate(
-                'bearer', { session: false }
+                middlewaresAuth.bearer,
             ), usuariosControlador.deleta
         );
-
-    app.
-    route('usuario/login')
-        .post(
-            middlewaresAuth.local,
-            usuariosControlador.login
-        )
 
 };

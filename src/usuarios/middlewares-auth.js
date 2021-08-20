@@ -1,5 +1,4 @@
 const passport = require('passport');
-const { InvalidArgumentError } = require('../erros');
 
 /*
 Utilizada como interedidador do retorno da requisição
@@ -14,7 +13,7 @@ module.exports = {
             'local', { session: false },
             (erro, usuario, info) => {
 
-                /*Retorno validação mensagem retorno erro genérico*/
+                /*Retorno validação mensagem retorno erro espscifico*/
                 if (erro && erro.name === 'InvalidArgumentError') {
                     return res.status(401).json({ erro: erro.mensage });
                 }
@@ -34,4 +33,28 @@ module.exports = {
             }
         )(req, res, next);
     },
+
+    bearer: (req, res, next) => {
+        passport.authenticate('bearer', { session: false },
+            (erro, usuario, info) => {
+
+                /*Retorno validação mensagem retorno erro especifico*/
+                if (erro && erro.name === 'JsonWebTokenError') {
+                    return res.status(401).json({ erro: erro.mensage })
+                }
+
+                /*Validação de erros não tratados*/
+                if (erro) {
+                    return res.status(500).json({ erro: erro.mensage });
+                }
+
+                if (!usuario) {
+                    return res.status(401).json();
+                }
+
+                req.user = usuario;
+                return next();
+            },
+            req, res, next);
+    }
 };

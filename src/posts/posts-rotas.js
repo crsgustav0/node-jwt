@@ -1,6 +1,5 @@
 const postsControlador = require('./posts-controlador');
-const passport = require('passport');
-
+const { middlewaresAuth } = require('../usuarios');
 
 module.exports = app => {
     app
@@ -13,6 +12,7 @@ module.exports = app => {
             passando via parâmetro a estratégia usada, no caso local
             e as sessões não utilizadas 'false'
             */
-            passport.authenticate('bearer', { session: false }),
-            postsControlador.adiciona);
+            middlewaresAuth.bearer,
+            postsControlador.adiciona
+        );
 };
